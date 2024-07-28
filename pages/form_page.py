@@ -1,11 +1,10 @@
-
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
 import time
-
 
 class FormPage:
     def __init__(self, driver):
@@ -85,26 +84,27 @@ class FormPage:
 
     def select_state(self):
         state_dropdown = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable(
-                (By.CSS_SELECTOR, "#state > div > div.css-1hwfws3 > div.css-1wa3eu0-placeholder"))
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "#state .css-1wa3eu0-placeholder"))
         )
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", state_dropdown)
         state_dropdown.click()
-        state_option = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, "#react-select-3-option-1"))
+
+        option_to_select = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.ID, "react-select-3-option-0"))
         )
-        state_option.click()
-        time.sleep(2)
+        option_to_select.click()
 
     def select_city(self):
         city_dropdown = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, "#city > div > div.css-1hwfws3 > div.css-1wa3eu0-placeholder"))
+            EC.element_to_be_clickable((By.CSS_SELECTOR, "#city .css-1wa3eu0-placeholder"))
         )
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", city_dropdown)
         city_dropdown.click()
-        city_option = WebDriverWait(self.driver, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, "#react-select-4-option-1"))
+
+        option_to_select = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.ID, "react-select-4-option-0"))
         )
-        city_option.click()
-        time.sleep(2)
+        option_to_select.click()
 
     def submit(self):
         submit_button = WebDriverWait(self.driver, 10).until(
