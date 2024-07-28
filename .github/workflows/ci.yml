@@ -47,3 +47,19 @@ jobs:
       with:
         name: allure-report
         path: allure-report
+
+    - name: Update README with Allure results
+      run: |
+        echo "## Allure Test Report" > ALLURE_SUMMARY.md
+        echo "![](allure-report/history/history-trend.png)" >> ALLURE_SUMMARY.md
+        cat ALLURE_SUMMARY.md README.md > TEMP_README.md && mv TEMP_README.md README.md
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add README.md
+        git commit -m "Update README with latest Allure test report"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
