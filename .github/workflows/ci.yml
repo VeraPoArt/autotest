@@ -42,16 +42,13 @@ jobs:
         tar -zxvf allure-2.13.8.tgz
         ./allure-2.13.8/bin/allure generate allure-results --clean -o allure-report
 
-    - name: Upload Allure Report
-      uses: actions/upload-artifact@v2
-      with:
-        name: allure-report
-        path: allure-report
-
-    - name: Update README with Allure results
+    - name: Create or Update README with Allure results
       run: |
         echo "## Allure Test Report" > ALLURE_SUMMARY.md
         echo "![](allure-report/history/history-trend.png)" >> ALLURE_SUMMARY.md
+        if [ ! -f README.md ]; then
+          echo "# Project UI Autotests" > README.md
+        fi
         cat ALLURE_SUMMARY.md README.md > TEMP_README.md && mv TEMP_README.md README.md
 
     - name: Commit and push changes
