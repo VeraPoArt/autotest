@@ -14,8 +14,10 @@ def driver():
     chrome_options.add_argument('--allow-running-insecure-content')
 
     # Проверка, что путь к драйверу верен
-    driver_path = os.path.abspath("./drivers/chromedriver.exe")
-    service = Service(driver_path)
+    #driver_path = os.path.abspath("./drivers/chromedriver.exe")
+    #service = Service(driver_path)
+
+    service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=chrome_options)
     driver.set_window_size(1920, 1080)  # Установка разрешения окна на 1920x1080
     driver.implicitly_wait(1)  # Установка неявного ожидания
