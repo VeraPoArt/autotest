@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 import os
+import platform
 
 @pytest.fixture(scope="session")
 def driver():
@@ -17,7 +18,12 @@ def driver():
     chrome_options.add_argument('--allow-running-insecure-content')
     chrome_options.add_argument('--disable-gpu')
 
-    service = Service(ChromeDriverManager().install())
+    if platform.system() == 'Windows':
+        driver_path = os.path.abspath("drivers/chromedriver.exe")
+        service = Service(driver_path)
+    else:
+        service = Service(ChromeDriverManager().install())
+
     driver = webdriver.Chrome(service=service, options=chrome_options)
     driver.set_window_size(1920, 1080)
     driver.implicitly_wait(10)

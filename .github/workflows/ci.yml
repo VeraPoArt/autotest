@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - main  # или ветка, на которую вы хотите реагировать
+      - main
   pull_request:
     branches:
       - main
@@ -41,6 +41,12 @@ jobs:
         wget https://github.com/allure-framework/allure2/releases/download/2.13.8/allure-2.13.8.tgz
         tar -zxvf allure-2.13.8.tgz
         ./allure-2.13.8/bin/allure generate allure-results --clean -o allure-report
+
+    - name: Upload Allure Report as Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: allure-report
+        path: allure-report/
 
     - name: Create or Update README with Allure results
       run: |
