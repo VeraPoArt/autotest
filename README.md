@@ -6,4 +6,4 @@
 
 ## Allure Test Report
 
-![Allure Report](https://verapoart.github.io/ui_autotests/docs/index.html)
+![Allure Report](https://verapoart.github.io/ui_autotests/)
