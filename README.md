@@ -9,6 +9,8 @@
 ## Allure Test Report
 ![Allure Report](https://verapoart.github.io/ui_autotests/)
 ## Allure Test Report
+![Allure Report](https://verapoart.github.io/ui_autotests/)
+## Allure Test Report
 ![](https://verapoart.github.io/ui_autotests/)
 ## Allure Test Report
 ![](https://verapoart.github.io/ui_autotests/)
