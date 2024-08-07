@@ -3,4 +3,5 @@
 Этот проект содержит UI автотесты, использующие Selenium и Allure для генерации отчетов.
 
 ## Allure Test Report
-![](allure-report/history/history-trend.png)
+
+![Allure Report](https://USERNAME.github.io/REPOSITORY/docs/index.html)
