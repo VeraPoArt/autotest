@@ -45,12 +45,13 @@ jobs:
         fi
         cat ALLURE_SUMMARY.md README.md > TEMP_README.md && mv TEMP_README.md README.md
 
-    - name: Commit and push changes
+    - name: Commit and pull changes
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git add README.md
         git commit -m "Update README with latest Allure test report"
+        git pull --rebase
         git push
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
