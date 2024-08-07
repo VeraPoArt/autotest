@@ -39,7 +39,7 @@ jobs:
     - name: Update README with Allure report
       run: |
         echo "## Allure Test Report" > ALLURE_SUMMARY.md
-        echo "![](https://verapoart.github.io/ui_autotests/)" >> ALLURE_SUMMARY.md
+        echo "![](https://verapoart.github.io/ui_autotests/allure-report/index.html)" >> ALLURE_SUMMARY.md
         if [ ! -f README.md ]; then
           echo "# Project UI Autotests" > README.md
         fi
