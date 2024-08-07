@@ -1,40 +1,26 @@
-name: Publish report
+name: Publish Allure Report
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  generate-report:
+  publish-report:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Run tests with Allure
-        run: |
-          pytest --alluredir=allure-results
-
-      - name: Set up Java
-        uses: actions/setup-java@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
 
       - name: Generate Allure Report
         run: |
@@ -42,11 +28,20 @@ jobs:
           tar -zxvf allure-2.23.1.tgz
           ./allure-2.23.1/bin/allure generate allure-results --clean -o docs
 
+      - name: Create or Update README with Allure results
+        run: |
+          echo "## Allure Test Report" > ALLURE_SUMMARY.md
+          echo "![Allure Report](https://verapoart.github.io/ui_autotests/)" >> ALLURE_SUMMARY.md
+          if [ ! -f README.md ]; then
+            echo "# Project UI Autotests" > README.md
+          fi
+          cat ALLURE_SUMMARY.md README.md > TEMP_README.md && mv TEMP_README.md README.md
+
       - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add docs
+          git add docs README.md
           git commit -m "Update Allure report"
           git push
         env:
