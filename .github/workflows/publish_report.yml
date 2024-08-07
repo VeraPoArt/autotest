@@ -3,7 +3,7 @@ name: Publish report
 on:
   push:
     branches:
-      - main  # Ветка, на которую вы хотите реагировать
+      - main
   pull_request:
     branches:
       - main
@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -31,7 +31,7 @@ jobs:
           pytest --alluredir=allure-results
 
       - name: Set up Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
