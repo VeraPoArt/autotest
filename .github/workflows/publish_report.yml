@@ -1,7 +1,6 @@
 name: Publish report
 
 on:
-  push:
   workflow_dispatch:
 
 permissions:
@@ -10,20 +9,8 @@ permissions:
   id-token: write
 
 jobs:
-  download-artifacts:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Download Allure Report artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-report
-
   publish-report:
     runs-on: ubuntu-latest
-    needs: download-artifacts
-    name: Report publication
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -31,8 +18,5 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: allure-report
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v2
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v1.2.9
