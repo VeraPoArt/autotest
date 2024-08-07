@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Configure Git
       run: |
@@ -21,11 +21,23 @@ jobs:
     - name: Pull latest changes
       run: git pull origin main
 
+    - name: Build project
+      run: |
+        # Команды для сборки проекта, например:
+        ./gradlew build
+        # Замените на соответствующую команду для вашего проекта
+
+    - name: Generate Allure report
+      run: |
+        # Команды для генерации отчета Allure
+        ./gradlew allureReport
+        # Если используете другую команду, замените на нее
+
     - name: Update Allure report
       run: |
-        # Команды для обновления отчета
         git add .
-        git commit -m "Update Allure report"
+        git commit -m "Update Allure report" || echo "No changes to commit"
 
     - name: Push changes
-      run: git push origin main
+      run: |
+        git push origin main || echo "Nothing to push"
