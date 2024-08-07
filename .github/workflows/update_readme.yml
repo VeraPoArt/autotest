@@ -34,12 +34,12 @@ jobs:
       run: |
         wget https://github.com/allure-framework/allure2/releases/download/2.13.8/allure-2.13.8.tgz
         tar -zxvf allure-2.13.8.tgz
-        ./allure-2.13.8/bin/allure generate allure-results --clean -o docs
+        ./allure-2.13.8/bin/allure generate allure-results --clean -o allure-report
 
     - name: Update README with Allure report
       run: |
         echo "## Allure Test Report" > ALLURE_SUMMARY.md
-        echo "[![](https://verapoart.github.io/ui_autotests/docs/index.html)](https://verapoart.github.io/ui_autotests/docs/index.html)" >> ALLURE_SUMMARY.md
+        echo "![](https://verapoart.github.io/ui_autotests/docs/index.html)" >> ALLURE_SUMMARY.md
         if [ ! -f README.md ]; then
           echo "# Project UI Autotests" > README.md
         fi
