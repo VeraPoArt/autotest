@@ -1,7 +1,6 @@
 name: Generate report
 
 on:
-  push:
   workflow_dispatch:
 
 permissions:
@@ -12,19 +11,23 @@ permissions:
 jobs:
   generate-report:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/setup-java@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v3
         with:
-          distribution: 'microsoft'
-          java-version: '17'
-      - run: sudo wget https://github.com/allure-framework/allure2/releases/download/2.23.1/allure-2.23.1.tgz && sudo tar -zxvf allure-2.23.1.tgz -C /opt/ && sudo ln -s /opt/allure-2.23.1/bin/allure /usr/bin/allure
+          distribution: 'temurin'
+          java-version: '22'
+      - name: Install Allure
+        run: sudo wget https://github.com/allure-framework/allure2/releases/download/2.23.1/allure-2.23.1.tgz && sudo tar -zxvf allure-2.23.1.tgz -C /opt/ && sudo ln -s /opt/allure-2.23.1/bin/allure /usr/bin/allure
       - name: Download all workflow run artifacts
-        uses: actions/download-artifact@v3
-      - run: allure generate -c allure-results -o _site
-      - name: Store generated report
-        uses: actions/upload-artifact@v3
+        uses: actions/download-artifact@v4
+      - name: Generate Allure Report
+        run: allure generate -c allure-results -o _site
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v4
         with:
-          name: _site
+          name: allure-report
           path: _site
           retention-days: 1
