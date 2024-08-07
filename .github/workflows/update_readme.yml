@@ -1,0 +1,33 @@
+name: Update README with Allure Test Report
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Generate Allure Test Report
+      run: |
+        echo "## Allure Test Report" > ALLURE_SUMMARY.md
+        echo "![](https://verapoart.github.io/ui_autotests/)" >> ALLURE_SUMMARY.md
+        if [ ! -f README.md ]; then
+          echo "# Project UI Autotests" > README.md
+        fi
+        cat ALLURE_SUMMARY.md README.md > TEMP_README.md && mv TEMP_README.md README.md
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add README.md
+        git commit -m "Update README with latest Allure test report"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
